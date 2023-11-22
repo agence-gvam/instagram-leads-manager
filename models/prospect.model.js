@@ -1,6 +1,7 @@
 const { default: mongoose } = require("mongoose");
 
 const prospectSchema = mongoose.Schema({
+  userName: String,
   url: String,
   platform: String,
   prospected: Boolean,

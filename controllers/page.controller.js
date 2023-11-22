@@ -2,20 +2,20 @@ const path = require("path");
 const fs = require("fs");
 
 module.exports.goToHome = async (req, res) => {
-  const pathDir = path.join(__dirname, "..");
-  const serverRoute = process.env.SERVER_URL + "/api/prospect";
+  const { sessionId } = req.cookies;
 
   try {
-    const htmlContent = fs.readFileSync(
-      pathDir + "/frontend/html/home.html",
-      "utf-8"
-    );
+    if (sessionId !== process.env.COOKIE)
+      throw new Error("You are not allowed to access these resources");
 
-    const newHtmlContent = htmlContent.replace("[SERVER_ROUTE]", serverRoute);
-
-    // res.send(newHtmlContent);
+    const pathDir = path.join(__dirname, "..");
     res.sendFile(pathDir + "/frontend/html/home.html");
   } catch (error) {
-    res.status(400).send(error);
+    res.redirect("/log");
   }
+};
+
+module.exports.goToLogPage = async (req, res) => {
+  const pathDir = path.join(__dirname, "..");
+  res.sendFile(pathDir + "/frontend/html/log.html");
 };
