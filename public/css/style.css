@@ -26,14 +26,15 @@ section > div {
   background-color: white;
   border: 1px solid #bcc8d4;
   border-radius: 10px;
+  width: 400px;
+  max-width: 95%;
   display: grid;
   justify-items: center;
   padding: 30px;
 }
 
 section form {
-  max-width: 90%;
-  width: 400px;
+  width: 100%;
   display: grid;
   gap: 20px;
 }
