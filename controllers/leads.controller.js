@@ -3,7 +3,8 @@ const { countLeads } = require("../services/counter.service");
 
 module.exports.createLead = async (req, res) => {
   const { url } = req.body;
-  const splitedUrl = url.split("/");
+  const removingQuery = url.split("?");
+  const splitedUrl = removingQuery[0].split("/");
 
   try {
     if (!url) throw new Error("You must fill the input");
