@@ -59,14 +59,14 @@ section #input-wrapper {
   gap: 5px;
 }
 
-section .confirm-msg {
+section .confirm {
   color: green;
   visibility: hidden;
   position: absolute;
   top: 40px;
 }
 
-section .error-msg {
+section .error {
   color: red;
   visibility: hidden;
   position: absolute;

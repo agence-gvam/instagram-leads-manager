@@ -3,7 +3,10 @@ require("dotenv").config({ path: "./config/.env" });
 const { default: mongoose } = require("mongoose");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const { createProspect } = require("./controllers/prospect.controller");
+const {
+  createProspect,
+  getCountProspects,
+} = require("./controllers/prospect.controller");
 const { goToHome, goToLogPage } = require("./controllers/page.controller");
 const { login } = require("./controllers/auth.controller");
 
@@ -19,6 +22,8 @@ app.use(cookieParser());
 //ROUTES
 app.get("/", goToHome);
 app.get("/log", goToLogPage);
+
+app.get("/api/prospect", getCountProspects);
 
 app.post("/api/auth", login);
 app.post("/api/prospect", createProspect);
