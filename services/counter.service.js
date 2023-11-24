@@ -1,8 +1,8 @@
-const Prospect = require("../models/prospect.model");
+const Lead = require("../models/lead.model");
 
-module.exports.countProspects = async () => {
+module.exports.countLeads = async () => {
   try {
-    return await Prospect.countDocuments();
+    return await Lead.countDocuments();
   } catch (error) {
     throw new Error(error);
   }

@@ -5,7 +5,7 @@ window.onload = () => {
   const loginForm = document.getElementById("login-form");
   const user = document.getElementById("user-input");
   const password = document.getElementById("password-input");
-  const nbProspect = document.getElementById("prospect-counter");
+  const nbLeads = document.getElementById("leads-counter");
 
   const fetchOptions = (method, body) => {
     const options = {
@@ -20,60 +20,65 @@ window.onload = () => {
   };
 
   (async () => {
-    await fetch("/api/prospect", fetchOptions("GET", undefined))
+    await fetch("/api/lead", fetchOptions("GET", undefined))
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Erreur HTTP : ${res.status}`);
         }
         return res.json();
       })
-      .then(({ prospectCounter }) => {
-        nbProspect.textContent = prospectCounter;
+      .then(({ leadCounter }) => {
+        nbLeads.textContent = leadCounter;
       })
       .catch((error) => console.log(error));
   })();
+
+  const resetForm = () => {
+    setTimeout(() => {
+      fetchMsg.classList.remove("error", "confirm", "active");
+      fetchMsg.textContent = "";
+      urlInput.value = "";
+    }, 3000);
+  };
 
   addForm &&
     addForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const body = { url: urlInput.value };
+      if (!urlInput.value || urlInput.value === "") {
+        fetchMsg.classList.add("active", "error");
+        fetchMsg.textContent = "You must fill the input";
+        resetForm();
+      } else {
+        const body = { url: urlInput.value };
+        await fetch("/api/lead", fetchOptions("POST", body))
+          .then(async (res) => {
+            if (!res.ok && res.status === 400)
+              throw new Error(await res.text());
 
-      await fetch("/api/prospect", fetchOptions("POST", body))
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`Erreur HTTP : ${res.status}`);
-          }
+            return res.json();
+          })
 
-          return res.json();
-        })
-
-        .then(({ isProspect, prospectCounter }) => {
-          console.log(isProspect);
-          console.log(prospectCounter);
-          nbProspect.textContent = prospectCounter;
-          if (isProspect) {
+          .then(({ isLead, leadCounter }) => {
+            console.log(isLead);
+            console.log(leadCounter);
+            nbLeads.textContent = leadCounter;
+            if (isLead) {
+              fetchMsg.classList.add("active", "error");
+              fetchMsg.textContent = "Lead already saved";
+            } else {
+              fetchMsg.classList.add("active", "confirm");
+              fetchMsg.textContent = "Lead saved";
+            }
+            resetForm();
+          })
+          .catch((error) => {
+            console.log(JSON.parse(error.message).error);
             fetchMsg.classList.add("active", "error");
-            fetchMsg.textContent = "Prospecté déjà enregistré";
-          } else {
-            fetchMsg.classList.add("active", "confirm");
-            fetchMsg.textContent = "Prospecté enregistré";
-          }
-          setTimeout(() => {
-            fetchMsg.classList.remove("error", "confirm", "active");
-            fetchMsg.textContent = "";
-            urlInput.value = "";
-          }, 5000);
-        })
-        .catch((error) => {
-          fetchMsg.classList.add("active", "error");
-          fetchMsg.textContent = error;
-          setTimeout(() => {
-            fetchMsg.classList.remove("error", "success");
-            fetchMsg.textContent = "";
-            urlInput.value = "";
-          }, 5000);
-        });
+            fetchMsg.textContent = JSON.parse(error.message).error;
+            resetForm();
+          });
+      }
     });
 
   loginForm &&

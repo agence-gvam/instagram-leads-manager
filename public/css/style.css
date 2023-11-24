@@ -76,3 +76,7 @@ section .error {
 section .active {
   visibility: visible;
 }
+
+section #fetch-msg {
+  position: absolute;
+}

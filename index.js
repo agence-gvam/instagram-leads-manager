@@ -1,16 +1,24 @@
 const express = require("express");
 require("dotenv").config({ path: "./config/.env" });
 const { default: mongoose } = require("mongoose");
+const { rateLimit } = require("express-rate-limit");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const {
-  createProspect,
-  getCountProspects,
-} = require("./controllers/prospect.controller");
-const { goToHome, goToLogPage } = require("./controllers/page.controller");
+const { createLead, getCountLeads } = require("./controllers/leads.controller");
+const { goToHome, goToLogPage } = require("./controllers/pages.controller");
 const { login } = require("./controllers/auth.controller");
 
 const app = express();
+
+// RATE LIMITER
+const limiter = rateLimit({
+  windowMs: 1000 * 60 * 15,
+  limit: 100,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+});
+
+app.use(limiter);
 
 app.use(express.static("public"));
 app.use(express.json());
@@ -22,11 +30,10 @@ app.use(cookieParser());
 //ROUTES
 app.get("/", goToHome);
 app.get("/log", goToLogPage);
-
-app.get("/api/prospect", getCountProspects);
-
 app.post("/api/auth", login);
-app.post("/api/prospect", createProspect);
+
+app.get("/api/lead", getCountLeads);
+app.post("/api/lead", createLead);
 
 mongoose
   .connect(process.env.DB_CONNECT)

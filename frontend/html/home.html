@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ajout d'un prospect</title>
+    <title>Add a new lead</title>
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,15 +15,14 @@
   <body>
     <section>
       <div>
-        <form id="add-form" action="/api/prospect" method="post">
-          <h2>Ajout d'un nouveau prospect</h2>
+        <form id="add-form">
+          <h2>Add a new lead</h2>
           <div id="input-wrapper">
             <input type="url" name="url" id="url-input" class="input" />
             <p id="fetch-msg" class="confirm-msg"></p>
-            <!-- <p id="error-msg" class="error-msg">Prospecté déjà enregistré</p> -->
           </div>
-          <input type="submit" value="Enregistrer" class="input" />
-          <p>Nombre de prospect: <span id="prospect-counter"></span></p>
+          <input type="submit" value="Save" class="input" />
+          <p>Leads counter: <span id="leads-counter"></span></p>
         </form>
       </div>
     </section>

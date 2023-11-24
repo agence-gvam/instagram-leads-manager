@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-const prospectSchema = mongoose.Schema({
+const leadSchema = mongoose.Schema({
   userName: String,
   url: String,
   platform: String,
@@ -9,6 +9,6 @@ const prospectSchema = mongoose.Schema({
   createdAt: Date,
 });
 
-const Prospect = mongoose.model("Prospect", prospectSchema);
+const Lead = mongoose.model("Lead", leadSchema);
 
-module.exports = Prospect;
+module.exports = Lead;
