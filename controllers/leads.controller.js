@@ -21,7 +21,13 @@ module.exports.createLead = async (req, res) => {
     const lead = await Lead.findOne({ userName });
 
     if (lead) isLead = true;
-    else await Lead.create({ url: newUrl, platform: "Instagram", userName });
+    else
+      await Lead.create({
+        url: newUrl,
+        platform: "Instagram",
+        userName,
+        createdAt: Date.now(),
+      });
 
     const leadCounter = await countLeads();
 
