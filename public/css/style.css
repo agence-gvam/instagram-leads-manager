@@ -18,8 +18,10 @@ body {
 section {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 30px;
 }
 
 section > div {
@@ -79,4 +81,28 @@ section .active {
 
 section #fetch-msg {
   position: absolute;
+}
+
+#lead-data-wrapper {
+  display: grid;
+  gap: 20px;
+}
+
+#lead-data-wrapper > div {
+  display: grid;
+  gap: 10px;
+  justify-self: left;
+  overflow: hidden;
+}
+
+#lead-data-wrapper p {
+  display: grid;
+  grid-template-columns: 70px auto;
+
+  white-space: nowrap;
+}
+
+#lead-data-wrapper span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

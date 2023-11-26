@@ -18,11 +18,11 @@ module.exports.createLead = async (req, res) => {
     const newUrl = `${splitedUrl[0]}//${splitedUrl[2]}/${splitedUrl[3]}`;
 
     let isLead = false;
-    const lead = await Lead.findOne({ userName });
+    let lead = await Lead.findOne({ userName });
 
     if (lead) isLead = true;
     else
-      await Lead.create({
+      lead = await Lead.create({
         url: newUrl,
         platform: "Instagram",
         userName,
@@ -31,7 +31,7 @@ module.exports.createLead = async (req, res) => {
 
     const leadCounter = await countLeads();
 
-    res.status(200).json({ isLead, leadCounter });
+    res.status(200).json({ isLead, leadCounter, lead });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -6,6 +6,9 @@ window.onload = () => {
   const user = document.getElementById("user-input");
   const password = document.getElementById("password-input");
   const nbLeads = document.getElementById("leads-counter");
+  const userName = document.getElementById("lead-data-username");
+  const instaLink = document.getElementById("lead-data-link");
+  const createdAt = document.getElementById("lead-data-adding-date");
 
   const fetchOptions = (method, body) => {
     const options = {
@@ -59,10 +62,7 @@ window.onload = () => {
             return res.json();
           })
 
-          .then(({ isLead, leadCounter }) => {
-            console.log(isLead);
-            console.log(leadCounter);
-            nbLeads.textContent = leadCounter;
+          .then(({ isLead, leadCounter, lead }) => {
             if (isLead) {
               fetchMsg.classList.add("active", "error");
               fetchMsg.textContent = "Lead already saved";
@@ -70,6 +70,11 @@ window.onload = () => {
               fetchMsg.classList.add("active", "confirm");
               fetchMsg.textContent = "Lead saved";
             }
+
+            nbLeads.textContent = leadCounter;
+            userName.textContent = lead.userName;
+            instaLink.textContent = lead.url;
+            createdAt.textContent = lead.createdAt && new Date(lead.createdAt);
             resetForm();
           })
           .catch((error) => {

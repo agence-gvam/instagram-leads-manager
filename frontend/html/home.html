@@ -16,14 +16,22 @@
     <section>
       <div>
         <form id="add-form">
-          <h2>Add a new lead</h2>
+          <h2>Find or add a new lead</h2>
           <div id="input-wrapper">
             <input type="url" name="url" id="url-input" class="input" />
             <p id="fetch-msg" class="confirm-msg"></p>
           </div>
-          <input type="submit" value="Save" class="input" />
+          <input type="submit" value="Find or Add" class="input" />
           <p>Leads counter: <span id="leads-counter"></span></p>
         </form>
+      </div>
+      <div id="lead-data-wrapper">
+        <h2>Lead's data</h2>
+        <div>
+          <p>Username : <span id="lead-data-username"></span></p>
+          <p>IG link : <span id="lead-data-link"></span></p>
+          <p>Added on : <span id="lead-data-adding-date"></span></p>
+        </div>
       </div>
     </section>
     <script src="/js/script.js"></script>
