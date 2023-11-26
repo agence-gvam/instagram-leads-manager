@@ -49,6 +49,23 @@ section h2 {
   border: 1px solid #97a3b4;
   border-radius: 5px;
   height: 40px;
+  padding: 0 10px 0 20px;
+}
+
+.input-password {
+  width: 100%;
+}
+
+.password-wrapper {
+  display: grid;
+  grid-template-columns: auto 30px;
+  align-items: center;
+  gap: 10px;
+}
+
+.password-wrapper img {
+  width: 30px;
+  cursor: pointer;
 }
 
 section input[type="submit"] {

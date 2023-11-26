@@ -9,6 +9,9 @@ window.onload = () => {
   const userName = document.getElementById("lead-data-username");
   const instaLink = document.getElementById("lead-data-link");
   const createdAt = document.getElementById("lead-data-adding-date");
+  const passwordIcon = document.querySelector(".password-img");
+
+  console.log(password.type);
 
   const fetchOptions = (method, body) => {
     const options = {
@@ -98,4 +101,16 @@ window.onload = () => {
         })
         .catch((error) => console.log(error));
     });
+
+  passwordIcon.addEventListener("click", (e) => {
+    console.log(password.type);
+    if (password.type === "password") {
+      password.type = "text";
+      e.target.src = "/assets/img/icons/eye-off.svg";
+    } else {
+      console.log("test");
+      password.type = "password";
+      e.target.src = "/assets/img/icons/eye.svg";
+    }
+  });
 };
