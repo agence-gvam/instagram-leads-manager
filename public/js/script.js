@@ -10,6 +10,8 @@ window.onload = () => {
   const instaLink = document.getElementById("lead-data-link");
   const createdAt = document.getElementById("lead-data-adding-date");
   const passwordIcon = document.querySelector(".password-img");
+  const deleteLeadBtn = document.getElementById("delete-lead-btn");
+  const leadStateMsg = document.getElementById("lead-state-msg");
 
   const fetchOptions = (method, body) => {
     const options = {
@@ -42,6 +44,13 @@ window.onload = () => {
       fetchMsg.classList.remove("error", "confirm", "active");
       fetchMsg.textContent = "";
       urlInput.value = "";
+    }, 3000);
+  };
+
+  const resetLeadMsg = () => {
+    setTimeout(() => {
+      leadStateMsg.textContent = "";
+      fetchMsg.classList.remove("error-msg");
     }, 3000);
   };
 
@@ -79,7 +88,6 @@ window.onload = () => {
             resetForm();
           })
           .catch((error) => {
-            console.log(JSON.parse(error.message).error);
             fetchMsg.classList.add("active", "error");
             fetchMsg.textContent = JSON.parse(error.message).error;
             resetForm();
@@ -102,7 +110,6 @@ window.onload = () => {
 
   passwordIcon &&
     passwordIcon.addEventListener("click", (e) => {
-      console.log(password.type);
       if (password.type === "password") {
         password.type = "text";
         e.target.src = "/assets/img/icons/eye-off.svg";
@@ -111,5 +118,39 @@ window.onload = () => {
         password.type = "password";
         e.target.src = "/assets/img/icons/eye.svg";
       }
+    });
+
+  deleteLeadBtn &&
+    deleteLeadBtn.addEventListener("click", async () => {
+      if (userName.textContent === "") {
+        leadStateMsg.classList.add("error-msg");
+        leadStateMsg.textContent = "You forgot to select a lead";
+        resetLeadMsg();
+        return;
+      }
+      await fetch("/api/lead/" + userName.textContent, { method: "DELETE" })
+        .then(async (res) => {
+          if (!res.ok && res.status === 400) throw new Error(await res.text());
+
+          return res.json();
+        })
+        .then(({ msg, leadCounter }) => {
+          nbLeads.textContent = leadCounter;
+          leadStateMsg.textContent = msg;
+          leadStateMsg.classList.add("confirm-msg");
+          userName.textContent = "";
+          instaLink.textContent = "";
+          createdAt.textContent = "";
+
+          setTimeout(() => {
+            leadStateMsg.textContent = "";
+            leadStateMsg.classList.remove("confirm-msg");
+          }, 3000);
+        })
+        .catch((error) => {
+          fetchMsg.classList.add("error-msg");
+          leadStateMsg.textContent = JSON.parse(error.message).error;
+          resetLeadMsg();
+        });
     });
 };

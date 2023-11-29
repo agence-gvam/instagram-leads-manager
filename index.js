@@ -4,7 +4,11 @@ const { default: mongoose } = require("mongoose");
 const { rateLimit } = require("express-rate-limit");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const { createLead, getCountLeads } = require("./controllers/leads.controller");
+const {
+  createLead,
+  getCountLeads,
+  deleteLead,
+} = require("./controllers/leads.controller");
 const { goToHome, goToLogPage } = require("./controllers/pages.controller");
 const { login } = require("./controllers/auth.controller");
 
@@ -34,6 +38,7 @@ app.post("/api/auth", login);
 
 app.get("/api/lead", getCountLeads);
 app.post("/api/lead", createLead);
+app.delete("/api/lead/:userName", deleteLead);
 
 mongoose
   .connect(process.env.DB_CONNECT)

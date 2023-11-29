@@ -101,6 +101,7 @@ section #fetch-msg {
 }
 
 #lead-data-wrapper {
+  position: relative;
   display: grid;
   gap: 20px;
 }
@@ -112,7 +113,7 @@ section #fetch-msg {
   overflow: hidden;
 }
 
-#lead-data-wrapper p {
+#lead-data-wrapper .lead-data {
   display: grid;
   grid-template-columns: 70px auto;
 
@@ -122,4 +123,25 @@ section #fetch-msg {
 #lead-data-wrapper span {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+#lead-data-wrapper button {
+  color: #d60b00;
+  background-color: #ffdedc;
+  border: 1px solid #d60b00;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.confirm-msg {
+  color: green;
+}
+
+.error-msg {
+  color: red;
+}
+
+#lead-state-msg {
+  grid-template-columns: auto !important;
 }

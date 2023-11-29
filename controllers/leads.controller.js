@@ -40,9 +40,26 @@ module.exports.createLead = async (req, res) => {
 module.exports.getCountLeads = async (req, res) => {
   try {
     const leadCounter = await countLeads();
-    console.log(leadCounter);
     res.status(200).json({ leadCounter });
   } catch (error) {
     res.status(400).send(error);
+  }
+};
+
+module.exports.deleteLead = async (req, res) => {
+  const { userName } = req.params;
+
+  try {
+    if (!userName) throw new Error("You forgot to select a lead.");
+
+    const lead = await Lead.findOneAndDelete({ userName });
+
+    const leadCounter = await countLeads();
+
+    if (!lead) throw new Error("This lead does not exist.");
+
+    res.status(200).json({ msg: "Lead deleted.", leadCounter });
+  } catch (error) {
+    res.status(400).send(error.message);
   }
 };
