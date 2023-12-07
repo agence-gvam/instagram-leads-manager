@@ -3,6 +3,7 @@ require("dotenv").config({ path: "./config/.env" });
 const { default: mongoose } = require("mongoose");
 const { rateLimit } = require("express-rate-limit");
 const morgan = require("morgan");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const {
   createLead,
