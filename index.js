@@ -24,6 +24,10 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
+//Enabling request from :
+const origin = ["chrome-extension://enckokfahepajbdomignodclhfalgijp"];
+app.use(cors({ origin, credentials: true }));
+
 app.use(express.static("public"));
 app.use(express.json());
 
