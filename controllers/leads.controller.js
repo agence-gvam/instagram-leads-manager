@@ -17,10 +17,10 @@ module.exports.createLead = async (req, res) => {
 
     const newUrl = `${splitedUrl[0]}//${splitedUrl[2]}/${splitedUrl[3]}`;
 
-    let isLead = false;
+    let existingLead = false;
     let lead = await Lead.findOne({ userName });
 
-    if (lead) isLead = true;
+    if (lead) existingLead = true;
     else
       lead = await Lead.create({
         url: newUrl,
@@ -31,7 +31,7 @@ module.exports.createLead = async (req, res) => {
 
     const leadCounter = await countLeads();
 
-    res.status(200).json({ isLead, leadCounter, lead });
+    res.status(200).json({ existingLead, leadCounter, lead });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -49,6 +49,8 @@ module.exports.getCountLeads = async (req, res) => {
 module.exports.deleteLead = async (req, res) => {
   const { userName } = req.params;
 
+  console.log(userName);
+
   try {
     if (!userName) throw new Error("You forgot to select a lead.");
 
@@ -60,6 +62,7 @@ module.exports.deleteLead = async (req, res) => {
 
     res.status(200).json({ msg: "Lead deleted.", leadCounter });
   } catch (error) {
+    console.log(error);
     res.status(400).send(error.message);
   }
 };
