@@ -10,6 +10,7 @@ module.exports.login = (req, res) => {
       //   res.sendStatus(200);
     }
   } catch (error) {
+    console.log(error);
     res.redirect("/log");
     res.status(400).send(error);
   }

@@ -10,6 +10,7 @@ module.exports.goToHome = async (req, res) => {
     const pathDir = path.join(__dirname, "../..");
     res.sendFile(pathDir + "/frontend/html/home.html");
   } catch (error) {
+    console.log(error);
     res.redirect("/log");
   }
 };

@@ -26,6 +26,7 @@ module.exports.checkIfLoggedUser = (req, res) => {
 
     res.status(200).send("Logged user");
   } catch (error) {
+    console.log(error);
     res.status(400).send(error.message);
   }
 };

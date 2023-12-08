@@ -33,6 +33,7 @@ module.exports.createLead = async (req, res) => {
 
     res.status(200).json({ existingLead, leadCounter, lead });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };
@@ -42,14 +43,13 @@ module.exports.getCountLeads = async (req, res) => {
     const leadCounter = await countLeads();
     res.status(200).json({ leadCounter });
   } catch (error) {
+    console.log(error);
     res.status(400).send(error);
   }
 };
 
 module.exports.deleteLead = async (req, res) => {
   const { userName } = req.params;
-
-  console.log(userName);
 
   try {
     if (!userName) throw new Error("You forgot to select a lead.");
