@@ -41,7 +41,8 @@ const origin = [
   "http://127.0.0.1:5500",
 ];
 app.use(
-  cors({ origin, credentials: true, methods: "GET,HEAD,PUT,PATCH,POST,DELETE" })
+  cors({ origin, credentials: true })
+  // cors({ origin, credentials: true, methods: "GET,HEAD,PUT,PATCH,POST,DELETE" })
 );
 
 app.use(express.static(__dirname + "/public"));

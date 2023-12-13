@@ -1,5 +1,4 @@
 const path = require("path");
-const fs = require("fs");
 
 module.exports.goToHome = async (req, res) => {
   const { sessionId } = req.cookies;
