@@ -72,8 +72,8 @@ window.onload = () => {
             return res.json();
           })
 
-          .then(({ isLead, leadCounter, lead }) => {
-            if (isLead) {
+          .then(({ existingLead, leadCounter, lead }) => {
+            if (existingLead) {
               fetchMsg.classList.add("active", "error");
               fetchMsg.textContent = "Lead already saved";
             } else {

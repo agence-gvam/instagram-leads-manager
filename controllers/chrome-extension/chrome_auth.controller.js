@@ -4,6 +4,10 @@ module.exports.chromeExtLogin = (req, res) => {
     if (user !== process.env.USERNAME || password !== process.env.PASSWORD)
       throw new Error("Incorrect username or password");
 
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "chrome-extension://enckokfahepajbdomignodclhfalgijp"
+    );
     res.cookie("sessionId", process.env.COOKIE, {
       maxAge: 1000 * 60 * 60,
       path: "/",
@@ -24,6 +28,10 @@ module.exports.checkIfLoggedUser = (req, res) => {
     if (!sessionId || sessionId !== process.env.COOKIE)
       throw new Error("Unlogged user");
 
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "chrome-extension://enckokfahepajbdomignodclhfalgijp"
+    );
     res.status(200).send("Logged user");
   } catch (error) {
     console.log(error);
